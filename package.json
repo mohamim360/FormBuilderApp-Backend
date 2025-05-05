@@ -2,15 +2,12 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "dev": "nodemon --watch src --exec ts-node src/index.ts",
-  "build": "tsc && prisma generate",
-  "start": "node dist/index.js",
-  "vercel-build": "npm run build",
-  "test": "echo \"Error: no test specified\" && exit 1"
-},"prisma": {
-  "schema": "prisma/schema.prisma"
-},
+  "scripts": {
+    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
