@@ -1,6 +1,7 @@
 import { PrismaClient, UserRole } from '@prisma/client';
 import authService from './auth.service';
 
+
 const prisma = new PrismaClient();
 
 const createUser = async (email: string, name: string, password: string, role: UserRole = 'USER') => {
@@ -64,6 +65,7 @@ const updateUser = async (id: string, data: { name?: string; email?: string; pas
   });
 };
 
+
 const deleteUser = async (id: string) => {
   return await prisma.user.delete({
     where: { id },
@@ -104,6 +106,7 @@ const getAllUsers = async (page: number = 1, limit: number = 10) => {
     limit,
     totalPages: Math.ceil(total / limit),
   };
+  
 };
 
 export default {
@@ -113,4 +116,5 @@ export default {
   updateUser,
   deleteUser,
   getAllUsers,
+  
 };

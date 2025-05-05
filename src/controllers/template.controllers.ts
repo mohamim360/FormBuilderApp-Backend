@@ -21,7 +21,8 @@ const createTemplate = async (req: Request, res: Response, next: NextFunction): 
       questions,
       tags,
       allowedUserIds,
-      userId
+      userId,
+      imageUrl,
     } = req.body;
 
     const image = req.file;
@@ -36,7 +37,7 @@ const createTemplate = async (req: Request, res: Response, next: NextFunction): 
       questions,
       tags,
       allowedUserIds,
-      image
+      imageUrl
     );
 
     res.status(201).json(template);
@@ -83,6 +84,7 @@ const updateTemplate = async (req: Request, res: Response, next: NextFunction): 
       questions,
       tags,
       allowedUserIds,
+      imageUrl,
     } = req.body;
 
     const image = req.file;
@@ -100,7 +102,7 @@ const updateTemplate = async (req: Request, res: Response, next: NextFunction): 
         tags,
         allowedUserIds,
       },
-      image
+      imageUrl
     );
 
     res.json(template);

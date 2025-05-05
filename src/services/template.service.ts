@@ -27,16 +27,7 @@ const createTemplate = async (
   }[],
   tags: string[],
   allowedUserIds?: string[],
-  image?: Express.Multer.File
-) => {
-  let imageUrl: string | undefined;
-
-  if (image) {
-    const result = await cloudinary.v2.uploader.upload(image.path, {
-      folder: 'forms/templates',
-    });
-    imageUrl = result.secure_url;
-  }
+  imageUrl?: string ) => {
 
   // Process tags - find existing or create new
   const tagConnections = tags.map(tagName => ({
@@ -156,7 +147,7 @@ const updateTemplate = async (
     tags?: string[];
     allowedUserIds?: string[];
   },
-  image?: Express.Multer.File
+  imageUrl?: string
 ) => {
   const template = await prisma.template.findUnique({
     where: { id },
@@ -167,29 +158,13 @@ const updateTemplate = async (
 
   if (!template) throw new Error('Template not found');
 
+
   // Check if user is admin or template author
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) throw new Error('User not found');
 
   if (user.role !== 'ADMIN' && template.authorId !== userId) {
     throw new Error('You are not authorized to update this template');
-  }
-
-  let imageUrl: string | undefined;
-
-  if (image) {
-    // Delete old image if exists
-    if (template.imageUrl) {
-      const publicId = template.imageUrl.split('/').pop()?.split('.')[0];
-      if (publicId) {
-        await cloudinary.v2.uploader.destroy(`forms/templates/${publicId}`);
-      }
-    }
-
-    const result = await cloudinary.v2.uploader.upload(image.path, {
-      folder: 'forms/templates',
-    });
-    imageUrl = result.secure_url;
   }
 
   // Handle tags update
@@ -799,6 +774,7 @@ const getPopularTags = async (limit: number = 50): Promise<{ id: string; name: s
     throw error;
   }
 };
+
 export default {
   createTemplate,
   getTemplateById,
