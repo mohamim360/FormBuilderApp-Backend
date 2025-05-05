@@ -190,7 +190,14 @@ const updateTemplate = async (
   // Handle questions update
   let questionsUpdate;
   if (data.questions) {
-    // First, delete all existing questions
+    // First, delete all existing questions'
+    await prisma.answer.deleteMany({
+      where: {
+        question: {
+          templateId: id,
+        },
+      },
+    });
     await prisma.question.deleteMany({
       where: { templateId: id },
     });
