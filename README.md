@@ -49,11 +49,35 @@ CLOUDINARY_API_KEY="your_api_key"
 CLOUDINARY_API_SECRET="your_api_secret"
 
 ```
+Here’s a complete `README.md` section to **start your full-stack project locally**, based on your provided `frontend` and `backend` configurations:
 
+---
+
+
+### Setup the **Backend**
+
+```bash
+cd backend
+npm install
+npx prisma db push       # Push schema to database
+npm run dev              # Start backend on http://localhost:5000
+```
+
+> Make sure PostgreSQL is running and `DATABASE_URL` is correctly set.
+
+---
+
+## 🔧 Build Commands
+
+### Backend
+
+```bash
+npm run build    # Builds backend (Prisma + TypeScript)
+```
 
 ## Project Structure
 
-### Backend
+
 ```
 prisma/ 
 ├──schema          # Database
