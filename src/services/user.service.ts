@@ -67,6 +67,39 @@ const updateUser = async (id: string, data: { name?: string; email?: string; pas
 
 
 const deleteUser = async (id: string) => {
+  const templates = await prisma.template.findMany({
+    where: { authorId: id },
+    select: { id: true },
+  });
+
+  const templateIds = templates.map(t => t.id);
+
+  // Delete in correct order
+  await prisma.answer.deleteMany({
+    where: { form: { templateId: { in: templateIds } } },
+  });
+
+  await prisma.comment.deleteMany({
+    where: { templateId: { in: templateIds } },
+  });
+
+  await prisma.like.deleteMany({
+    where: { templateId: { in: templateIds } },
+  });
+
+  await prisma.form.deleteMany({
+    where: { templateId: { in: templateIds } },
+  });
+
+  await prisma.question.deleteMany({
+    where: { templateId: { in: templateIds } },
+  });
+
+  await prisma.template.deleteMany({
+    where: { id: { in: templateIds } },
+  });
+
+  // Now delete user
   return await prisma.user.delete({
     where: { id },
     select: {
@@ -76,6 +109,8 @@ const deleteUser = async (id: string) => {
     },
   });
 };
+
+
 
 const getAllUsers = async (page: number = 1, limit: number = 10) => {
   const skip = (page - 1) * limit;

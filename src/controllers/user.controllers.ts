@@ -110,6 +110,7 @@ const deleteUser = async (req: Request, res: Response, next: NextFunction): Prom
     // Prevent admin from deleting themselves
     if (currentUser.id === id) {
        res.status(400).json({ message: 'Cannot delete your own account' });
+       return;
     }
 
     const deletedUser = await userService.deleteUser(id);

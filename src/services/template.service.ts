@@ -263,14 +263,11 @@ const updateTemplate = async (
 const deleteTemplate = async (id: string, userId: string) => {
   const template = await prisma.template.findUnique({
     where: { id },
-    include: {
-      author: true,
-    },
+    include: { author: true },
   });
 
   if (!template) throw new Error('Template not found');
 
-  // Check if user is admin or template author
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) throw new Error('User not found');
 
@@ -278,7 +275,7 @@ const deleteTemplate = async (id: string, userId: string) => {
     throw new Error('You are not authorized to delete this template');
   }
 
-  // Delete template image from Cloudinary if exists
+  // 1. Delete image from Cloudinary
   if (template.imageUrl) {
     const publicId = template.imageUrl.split('/').pop()?.split('.')[0];
     if (publicId) {
@@ -286,10 +283,31 @@ const deleteTemplate = async (id: string, userId: string) => {
     }
   }
 
+  // 2. Delete answers first
+  await prisma.answer.deleteMany({
+    where: {
+      question: {
+        templateId: id,
+      },
+    },
+  });
+
+  // 3. Delete questions
+  await prisma.question.deleteMany({
+    where: { templateId: id },
+  });
+
+  // 4. Delete forms
+  await prisma.form.deleteMany({
+    where: { templateId: id },
+  });
+
+  // 5. Now delete the template
   return await prisma.template.delete({
     where: { id },
   });
 };
+
 
 const searchTemplates = async (query: string, userId?: string, page: number = 1, limit: number = 10) => {
   const skip = (page - 1) * limit;
