@@ -4,8 +4,8 @@
 This is the backend server for a Form Builder application, built with Node.js, Express, and Prisma. It provides RESTful APIs for user authentication, template creation,Form management and more.
 
 ## Live Demo
-[Server live link](https://formbuilderapp-backend-6.onrender.com)  
-[Client live link](https://form-builder-app-frontend-eta.vercel.app/)
+[Backend live link](https://formbuilderapp-backend-6.onrender.com)  
+[Frontend live link](https://form-builder-app-frontend-eta.vercel.app/)
 
 ## GitHub Repositories
 - Frontend: [https://github.com/mohamim360/FormBuilderApp-Frontend](https://github.com/mohamim360/FormBuilderApp-Frontend)
@@ -33,11 +33,11 @@ This is the backend server for a Form Builder application, built with Node.js, E
 ![ER Diagram](src/uploads/ER.PNG)
 
 ## Environment Configuration
-Create a `.env` file with the following variables:
+The following are the necessary ENV variables. `.env`:
 
 ```env
 # Database
-DATABASE_URL="postgresql://postgres:password@localhost:5432/formbuilder?schema=public"
+DATABASE_URL="postgresql://[username]:[password]@[host]:[port]/[database]?schema=[schema]"
 
 # Authentication
 JWT_SECRET="your_secure_jwt_secret"
