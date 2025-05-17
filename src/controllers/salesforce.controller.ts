@@ -14,12 +14,14 @@ import { createContact } from '../services/salesforce.service';
 
 export const connectSalesforce = async(req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const { name, email, phone } = req.body;
+		const { name, email, phone, company, jobTitle } = req.body;
 	
 		const result = await createContact({
 			name: name,
 			email: email,
-			phone: phone
+			phone: phone,
+			company: company,      
+      jobTitle: jobTitle 
 		});
 		res.json({success : true, contactId: result.id});
 	}catch (error) {
