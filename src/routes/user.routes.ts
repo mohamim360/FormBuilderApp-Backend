@@ -3,12 +3,13 @@ const  { body }  = require('express-validator');
 import { adminMiddleware, authMiddleware } from '../middleware/auth.middleware';
 import userControllers from '../controllers/user.controllers';
 import validate from '../middleware/validation.middleware';
+import { connectSalesforce } from '../controllers/salesforce.controller';
 
 
 const router = Router();
 
 router.use(authMiddleware);
-
+router.post('/:id/salesforce', connectSalesforce);
 router.get('/', adminMiddleware, userControllers.getAllUsers);
 
 router.get('/:id', userControllers.getUserById);
