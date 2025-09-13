@@ -7,6 +7,26 @@ This is the backend server for a Form Builder application, built with Node.js, E
 [Backend live link](https://formbuilderapp-backend-6.onrender.com)  
 [Frontend live link](https://form-builder-app-frontend-eta.vercel.app/)
 
+## Docker Live (Run Locally with Docker)
+You can run the whole stack (frontend, backend, and PostgreSQL) using Docker.
+
+```bash
+# Clone repositories
+git clone https://github.com/mohamim360/FormBuilderApp-Frontend.git
+git clone https://github.com/mohamim360/FormBuilderApp-Backend.git
+
+# Go to project root (where docker-compose.yml is located)
+cd FormBuilderApp
+
+# Start containers
+docker-compose up --build
+Frontend → http://localhost:5173
+
+Backend → http://localhost:5000
+
+Database → PostgreSQL runs inside container (formbuilder DB)
+```
+
 ## GitHub Repositories
 - Frontend: [https://github.com/mohamim360/FormBuilderApp-Frontend](https://github.com/mohamim360/FormBuilderApp-Frontend)
 - Backend: [https://github.com/mohamim360/FormBuilderApp-Backend](https://github.com/mohamim360/FormBuilderApp-Backend)
